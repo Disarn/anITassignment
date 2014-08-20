@@ -6,27 +6,37 @@
 
 package Digital;
 
-import java.beans.PropertyChangeListener;
+import java.beans.*;
 
 /**
  *
  * @author melatonind
  */
 public class OutputTerminal implements Terminal {
-
+    private boolean value;
+    private PropertyChangeSupport prop =
+        new PropertyChangeSupport(this);
+    
     @Override
     public boolean getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return value;
+    }
+    
+    public void setValue(boolean v) {
+        boolean oldValue = value;
+        value = v;
+        prop.firePropertyChange("Value",
+                                   oldValue, value);
     }
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener pl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        prop.addPropertyChangeListener(listener);
     }
 
     @Override
-    public void removePropertyChangeListener(PropertyChangeListener pl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        prop.removePropertyChangeListener(listener);
     }
     
 }
